@@ -7,7 +7,7 @@ import java.net.Socket;
 /**
  * Processor of HTTP request.
  */
-public class Processor {
+public class Processor implements Runnable {
     private final Socket socket;
     private final HttpRequest request;
 
@@ -160,6 +160,15 @@ public class Processor {
             output.println("</html>");
             output.flush();
             socket.close();
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            process();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
